@@ -7,7 +7,7 @@ class Start extends Component<any, any> {
       <div className="Start crt">
         <h2 className={'logo arcade-font'}>Scrum Pokr</h2>
         <div className={'btn arcade-font'}>
-          <Link to={Math.random().toString(36).substr(2, 4)}>Play</Link>
+          <Link to={Math.random().toString(36).substr(2, 3).toUpperCase()}>Play</Link>
         </div>
         <div className={'copyright'}>
 	    	by&nbsp;
