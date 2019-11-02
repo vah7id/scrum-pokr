@@ -22,6 +22,7 @@ class Game extends Component<any, State> {
   }
   render() {
   	let alphabets = []; 
+  	let disabled = this.state.name || 'disabled';
     for(let i = 0; i < 26 ; i++) {
 	    alphabets.push(<li onClick={(e)=>this.setName(e)}>{String.fromCharCode(97 + i).toUpperCase()}</li>);
     }
@@ -33,7 +34,7 @@ class Game extends Component<any, State> {
       			{ alphabets }
       			<li onClick={() => this.resetName() } className={'reset'}>{"<<"}</li>
       		</ul>
-      		<div className={'btn arcade-font'}>
+      		<div className={`btn arcade-font ${disabled}`}>
 	          Start
 	        </div>
       	</div>

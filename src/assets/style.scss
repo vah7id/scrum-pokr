@@ -27,6 +27,8 @@ body {
 			text-align: center;
 			font-size: 2em;
 			height: 5vh;
+			text-shadow: -3px 0 0 blue,-5px 0 0 #000,3px 0 0 red,5px 0 0 orange;
+			color: pink;
 		}
 		.btn {
 			display: block;
@@ -50,24 +52,27 @@ body {
 				border-color:red;
 			}
 			li {
-				text-shadow: -3px 0 0 blue,-5px 0 0 #000,3px 0 0 red,5px 0 0 orange;
+				text-shadow: -3px 0 0 blue,-5px 0 0 #000,3px 0 0 yellow,5px 0 0 purple;
+				color: lightblue;
 				width: 50px;
 				height: 40px;
 				padding-top: 10px;
-				color: yellow;
 				cursor: pointer;
 				text-align: center;
 				margin-left: 10px;
 				font-size: 2em;
-				border: 1px solid rgba(255,255,255,0.3);
+				border: 2px solid rgba(255,255,255,0.3);
 				border-radius: 5px;
 				&:hover,&:focus {
-					background: lightblue;
 					border-color: white;
 				}
 			}
 		}
 	}
+}
+
+.disabled {
+	opacity: 0.7;
 }
 
 .logo {
