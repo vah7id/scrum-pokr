@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Kickoff from './Kickoff';
-import { Icons } from './Icons';
+import Cards from './Cards';
+import Players from './Players';
 
 interface State {
 	name: string;
@@ -25,24 +26,17 @@ class Game extends Component<any, State> {
     }
     this.setName = this.setName.bind(this);
     this.kickoff = this.kickoff.bind(this);
+    this.setCard = this.setCard.bind(this);
+    this.invite = this.invite.bind(this);
   }
   setName(e: any, reset: boolean = false) {
+	const value = e.currentTarget.innerHTML;
   	if(this.state.name.length < 6) {
-  		const value = e.currentTarget.innerHTML;
     	this.setState({ name: reset ? '' : this.state.name + value });
     }
   }
-  copyToClibboard(value: string) {
-	this.invite(true);
-  	const el = document.createElement('textarea');
-	el.value = value;
-	document.body.appendChild(el);
-	el.select();
-	document.execCommand('copy');
-	document.body.removeChild(el);
-  }
   invite(close: boolean = false) {
-  	this.setState({ invitationModal: close ? 'hidden' : '' });
+    this.setState({ invitationModal: close ? 'hidden' : '' });
   }
   setCard(e: any) {
   	console.log(e.currentTarget.value)
@@ -51,7 +45,6 @@ class Game extends Component<any, State> {
   	this.setState({ screen: Screen.PLAYING });
   }
   render() { 
-  	const url = window.location.href.replace('#!/','');
     return (
       <div className="Game crt">
       	{
@@ -65,41 +58,8 @@ class Game extends Component<any, State> {
       	{
       		this.state.screen === Screen.PLAYING &&
       		<div className="Panel">
-      			<div className={'Cards'}>
-      				<ul>
-      				{
-      					[1, 3, 5, 8, 13, 20, 30, 40, 50].map(card => {
-							return(<li onClick={(e) => this.props.setCard(e) }><b>{card}</b></li>);
-						})
-      				}
-      				</ul>
-      			</div>
-	      		<div className={'Players'}>
-		      		{
-		      			this.state.invitationModal !== 'hidden' &&	
-		      			<div className={'Invitation'}>
-		      				<span>{url}</span>
-		      				<button 
-		      					onClick={() => this.copyToClibboard(url)} className={'btn arcade-font btn-invite'}>Copy</button>
-		      			</div>
-		      		}
-	      			<div onClick={() => this.invite()} className={'Player'}>
-	      				<img src={Icons.robot} />
-		        		<h3>+Invite</h3>
-	      			</div>
-		        	<div className={'Player'}>
-		        		<img src={Icons.chicken} />
-		        		<h3>Hugo</h3>
-		        	</div>
-		        	<div className={'Player'}>
-		        		<img src={Icons.hamster} />
-		        		<h3>Vahid</h3>
-		        	</div>
-		        	<div className={'Player'}>
-		        		<img src={Icons.ghost} />
-		        		<h3>Tams</h3>
-		        	</div>
-		        </div>
+      			<Cards setCard={this.setCard} />
+	      		<Players {...this.state.invitationModal} invite={this.invite} />
 	        </div>
       	}
       </div>

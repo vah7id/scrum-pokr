@@ -8,8 +8,6 @@ class App extends Component<any, any> {
   render() {
     return (
       <div className="App">
-        <div className={'stars'} />
-        <div className={'twinkling'} />
         <HashRouter
           basename={'/'}
           hashType={'hashbang'}

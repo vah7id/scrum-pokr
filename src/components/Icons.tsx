@@ -9,7 +9,7 @@ import pig from '../assets/icons/pig.png';
 import pizza from '../assets/icons/pizza.png';
 import robot from '../assets/icons/robot.png';
 
-export const Icons = {
+const Icons = {
 	chicken,
 	frog,
 	ghost,
@@ -21,3 +21,5 @@ export const Icons = {
 	pig,
 	robot,
 };
+
+export default Icons;
