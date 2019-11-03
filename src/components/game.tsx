@@ -5,6 +5,7 @@ import { Icons } from './Icons';
 interface State {
 	name: string;
 	screen: string;
+	invitationModal: string;
 }
 
 enum Screen {
@@ -20,6 +21,7 @@ class Game extends Component<any, State> {
     this.state = {
       name: '',
       screen: Screen.KICK_OFF,
+      invitationModal: 'hidden'
     }
     this.setName = this.setName.bind(this);
     this.kickoff = this.kickoff.bind(this);
@@ -30,6 +32,18 @@ class Game extends Component<any, State> {
     	this.setState({ name: reset ? '' : this.state.name + value });
     }
   }
+  copyToClibboard(value: string) {
+	this.invite(true);
+  	const el = document.createElement('textarea');
+	el.value = value;
+	document.body.appendChild(el);
+	el.select();
+	document.execCommand('copy');
+	document.body.removeChild(el);
+  }
+  invite(close: boolean = false) {
+  	this.setState({ invitationModal: close ? 'hidden' : '' });
+  }
   setCard(e: any) {
   	console.log(e.currentTarget.value)
   }
@@ -37,18 +51,19 @@ class Game extends Component<any, State> {
   	this.setState({ screen: Screen.PLAYING });
   }
   render() { 
+  	const url = window.location.href.replace('#!/','');
     return (
       <div className="Game crt">
-      	{/*
+      	{
       		this.state.screen === Screen.KICK_OFF && 
       		<Kickoff 
       			{...this.state} 
       			kickoff={this.kickoff} 
       			setName={this.setName}
   			/>
-      	*/}
+      	}
       	{
-      		this.state.screen === Screen.KICK_OFF &&
+      		this.state.screen === Screen.PLAYING &&
       		<div className="Panel">
       			<div className={'Cards'}>
       				<ul>
@@ -60,7 +75,15 @@ class Game extends Component<any, State> {
       				</ul>
       			</div>
 	      		<div className={'Players'}>
-	      			<div className={'Player'}>
+		      		{
+		      			this.state.invitationModal !== 'hidden' &&	
+		      			<div className={'Invitation'}>
+		      				<span>{url}</span>
+		      				<button 
+		      					onClick={() => this.copyToClibboard(url)} className={'btn arcade-font btn-invite'}>Copy</button>
+		      			</div>
+		      		}
+	      			<div onClick={() => this.invite()} className={'Player'}>
 	      				<img src={Icons.robot} />
 		        		<h3>+Invite</h3>
 	      			</div>

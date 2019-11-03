@@ -62,43 +62,27 @@ body {
 		max-width: 400px;
 		flex-direction: row;
 		width: 90%;
-		height: 50vh;
+		height: 40vh;
 
 		li {
-			border-radius: 35px;
-			background-size: cover;
-			background: transparent url('./images/card.jpg') no-repeat center center;
-			flex: 1;
+			width: 50px;
+			height: 40px;
 			padding-top: 10px;
-			min-width: 100px;
-			min-height: 100px;
 			cursor: pointer;
 			text-align: center;
+			min-width: 100px;
+			flex: 1;
 			margin-left: 10px;
+			border: 2px solid rgba(255,255,255,0.3);
+			border-radius: 5px;
 			&:hover,&:focus {
 				border-color: white;
 			}
-			&:nth-child(5),
-			&:nth-child(6),
-			&:nth-child(7),
-			&:nth-child(8),
-			&:nth-child(9) {
-				b {
-					margin-left: 25px;
-					max-width: 63px;
-				}
-			}
 			b {
-				background: #eaa816;
-				margin: 13px auto;
-				padding-top: 15px;
 				text-align: center;
-				height: 52px;
-				max-width: 50px;
 				font-size: 2.5em;
-				display: block;
-				text-shadow: -3px 0 0 orange,-5px 0 0 #000,3px 0 0 transparent,5px 0 0 white;
-				color: #82593b;
+				text-shadow: -3px 0 0 blue,-5px 0 0 #000,3px 0 0 yellow,5px 0 0 purple;
+				color: lightblue;
 			}
 		}
 	}
@@ -205,6 +189,33 @@ body {
   }
 }
 
+button, a {
+	outline: none;
+}
+
+.Invitation {
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+	span {
+		color: #d6b324;
+		font-size: 0.8em;
+		padding: 10px;
+		letter-spacing: -3px;
+	}
+	button {
+		animation: none;
+		margin-top: 10px;
+		padding: 5px 15px;
+		margin: 10px 5px;
+		background: none;
+		border-radius: 5px;
+		width: 100%;
+		font-size: 1em;
+		letter-spacing: 2px;
+	}
+}
+
 .copyright {
 	text-align: center;
 	color: lightblue;
@@ -241,24 +252,6 @@ body {
 	animation: move-twink-back 300s linear infinite;
 }
 
-@keyframes hard-flicker {
-  $steps: 20;
-  @for $i from 0 through $steps {
-    #{percentage($i / $steps)} {
-      opacity: random();
-    }
-  }
-}
-
-@keyframes soft-flicker {
-  $steps: 20;
-  @for $i from 0 through $steps {
-    #{percentage($i / $steps)} {
-      opacity: 0.175 * (4 + random());
-    }
-  }
-}
-
 .crt {
   overflow: hidden;
 }
@@ -292,6 +285,25 @@ body {
   pointer-events:none;
 }
 
+
+@keyframes hard-flicker {
+  $steps: 20;
+  @for $i from 0 through $steps {
+    #{percentage($i / $steps)} {
+      opacity: random();
+    }
+  }
+}
+
+@keyframes soft-flicker {
+  $steps: 20;
+  @for $i from 0 through $steps {
+    #{percentage($i / $steps)} {
+      opacity: 0.175 * (4 + random());
+    }
+  }
+}
+
  @keyframes blink {
    to {
      visibility: hidden;
@@ -320,10 +332,8 @@ body {
 	}
 	.Cards {
 		ul {
-			height: 50vh;
 			li {
-				min-width: 100px;
-				min-height: 100px;
+				min-width: 60px;
 				b {
 					font-size: 2em;
 				}
@@ -335,12 +345,11 @@ body {
 @media screen and (max-width: 320px) {
 	.Cards {
 		ul {
-			height: 60vh;
 			li {
-				min-width: 80px;
-				min-height: 80px;
+				min-width: 60px;
+				max-height: 50px;
 				b {
-					margin-left: 15px !important;
+					font-size: 2em;
 				}
 			}
 		}
