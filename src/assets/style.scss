@@ -32,6 +32,7 @@ body {
 	flex-direction: row;
 	flex-wrap: wrap;
 	.Player {
+		max-width: 60px;
 		cursor: pointer;
 		margin: 15px 0 auto 15px;
 		text-align: center;
@@ -194,25 +195,18 @@ button, a {
 }
 
 .Invitation {
-    width: 90%;
-    display: block;
+    text-align: center;
+    display: flex;
+    max-width: 400px;
     margin: 0 auto;
+    padding-top: 2vh;
 	span {
 		color: #d6b324;
+		margin: 0 auto;
+		display: block;
 		font-size: 0.8em;
 		padding: 10px;
 		letter-spacing: -3px;
-	}
-	button {
-		animation: none;
-		margin-top: 10px;
-		padding: 5px 15px;
-		margin: 10px 5px;
-		background: none;
-		border-radius: 5px;
-		width: 100%;
-		font-size: 1em;
-		letter-spacing: 2px;
 	}
 }
 
@@ -282,21 +276,12 @@ button, a {
   }
 }
 
- @keyframes blink {
-   to {
-     visibility: hidden;
-   }
- }
-  
-
-@keyframes move-twink-back {
-	from {
-		background-position:0 0;
-	}
+@keyframes blink {
 	to {
-		background-position:-10000px 5000px;
+	 visibility: hidden;
 	}
 }
+
 
 @media screen and (max-width: 768px) {
 	.logo {

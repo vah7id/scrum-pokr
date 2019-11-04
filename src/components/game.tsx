@@ -6,7 +6,6 @@ import Players from './Players';
 interface State {
 	name: string;
 	screen: string;
-	invitationModal: string;
 }
 
 enum Screen {
@@ -22,12 +21,10 @@ class Game extends Component<any, State> {
     this.state = {
       name: '',
       screen: Screen.KICK_OFF,
-      invitationModal: 'hidden'
     }
     this.setName = this.setName.bind(this);
     this.kickoff = this.kickoff.bind(this);
     this.setCard = this.setCard.bind(this);
-    this.invite = this.invite.bind(this);
   }
   setName(e: any, reset: boolean = false) {
 	const value = e.currentTarget.innerHTML;
@@ -35,16 +32,14 @@ class Game extends Component<any, State> {
     	this.setState({ name: reset ? '' : this.state.name + value });
     }
   }
-  invite(close: boolean = false) {
-    this.setState({ invitationModal: close ? 'hidden' : '' });
-  }
   setCard(e: any) {
   	console.log(e.currentTarget.value)
   }
   kickoff() {
   	this.setState({ screen: Screen.PLAYING });
   }
-  render() { 
+  render() {
+    const url = window.location.href.replace('#!/','');
     return (
       <div className="Game crt">
       	{
@@ -58,8 +53,11 @@ class Game extends Component<any, State> {
       	{
       		this.state.screen === Screen.PLAYING &&
       		<div className="Panel">
+	      		<div className={'Invitation'}>
+		          <span>{url}</span>
+		        </div>
       			<Cards setCard={this.setCard} />
-	      		<Players {...this.state.invitationModal} invite={this.invite} />
+	      		<Players />
 	        </div>
       	}
       </div>
