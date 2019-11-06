@@ -10,10 +10,6 @@ client.onopen = (msg) => {
     console.log('send signal')
 };
 
-client.onmessage = (msg) => {
-	console.log(JSON.parse(msg.data))
-}
-
 client.onclose = () => {
     console.log('lost connection')
 }

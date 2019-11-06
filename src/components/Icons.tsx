@@ -9,7 +9,7 @@ import pig from '../assets/icons/pig.png';
 import pizza from '../assets/icons/pizza.png';
 import robot from '../assets/icons/robot.png';
 
-const Icons = {
+const Icons: any = {
 	chicken,
 	frog,
 	ghost,

@@ -85,11 +85,11 @@ wsServer.on('request', function(request) {
         		// create new room
     			const newRoom = { id: data.id, players: [player] };
         		rooms.push(newRoom);
-        		sendToAll(data.id, { cmd: 'ROOM_UPDATE', newRoom });
+        		sendToAll(data.id, { cmd: 'ROOM_UPDATE', room: newRoom });
         	} else {
         		// join to current room
         		currentRoom.players.push(player)
-        		sendToAll(currentRoom.id, { cmd: 'ROOM_UPDATE', currentRoom });
+        		sendToAll(currentRoom.id, { cmd: 'ROOM_UPDATE', room: currentRoom });
         	}
         }
     });
