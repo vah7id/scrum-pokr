@@ -13,12 +13,8 @@ class App extends Component<any, any> {
           hashType={'hashbang'}
         >
           <Switch>
-            <Route exact path="/">
-              <Start />
-            </Route>
-            <Route path="/:id">
-              <Game />
-            </Route>
+            <Route exact path="/" component={Start} />
+            <Route path="/:id" component={Game} />
           </Switch>
         </HashRouter>
       </div>

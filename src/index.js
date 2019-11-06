@@ -3,27 +3,24 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-export const peerConnectionConfig = {'iceServers': [{'url': 'stun:stun.services.mozilla.com'}, {'url': 'stun:stun.l.google.com:19302'}]};
-export const serverConnection = new WebSocket('ws://127.0.0.1:3434');
+export const WS = require('websocket').w3cwebsocket;
+export const client = new WS('ws://localhost:8000/', 'echo-protocol', null, null, {});
 
-export let peerConnection = null;
-
-window['RTCPeerConnection'] = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-
-serverConnection.onopen = function () {
-  serverConnection.send('message to client');
+client.onopen = (msg) => {
+    console.log('send signal')
 };
 
-// Log errors
-serverConnection.onerror = function (error) {
-  console.error('WebSocket Error ' + error);
-};
+client.onmessage = (msg) => {
+	console.log(JSON.parse(msg.data))
+}
 
-serverConnection.onmessage = (message) => {
-    if(!peerConnection) {
-    	new RTCPeerConnection(peerConnectionConfig);
-    }
-};
+client.onclose = () => {
+    console.log('lost connection')
+}
+
+client.onerror = () => {
+    console.log('error in connection')
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
