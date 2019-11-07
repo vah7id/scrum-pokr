@@ -30,9 +30,9 @@ function originIsAllowed(origin) {
     return true;
 }
 
-function setConnection(userid, connection) {
-    if(!connections[userid]) {
-        connections[userid] = connection;
+function setConnection(sessionId, connection) {
+    if(!connections[sessionId]) {
+        connections[sessionId] = connection;
     }
 }
 
@@ -76,9 +76,12 @@ wsServer.on('request', function(request) {
         
         if(cmd === 'JOIN_GAME') {
             setConnection(data.sessionId, connection);
+            connection['sessionId'] = data.sessionId;
+			connection['roomId'] = data.id;
         	const player = {
 				name: data.name,
 				id: data.sessionId,
+				status: 'connected',
 			}
         	const currentRoom = rooms.find(room => room.id === data.id);
         	if(!currentRoom) {
@@ -88,13 +91,40 @@ wsServer.on('request', function(request) {
         		sendToAll(data.id, { cmd: 'ROOM_UPDATE', room: newRoom });
         	} else {
         		// join to current room
-        		currentRoom.players.push(player)
-        		sendToAll(currentRoom.id, { cmd: 'ROOM_UPDATE', room: currentRoom });
+        		const currentPlayer = currentRoom.players.find(player => player.id === data.sessionId);
+        		if(!currentPlayer) {
+        			currentRoom.players.push(player);
+        			sendToAll(currentRoom.id, { 
+        				cmd: 'ROOM_UPDATE', 
+        				room: currentRoom 
+        			});
+        		} else {
+        			const idx = currentRoom.players.indexOf(currentPlayer);
+        			currentRoom.players[idx].status = 'connected';
+        			sendToAll(currentRoom.id, { 
+        				cmd: 'PLAYER_RECONNECT', 
+        				room: currentRoom,
+        				player
+        			});
+        		}
         	}
         }
     });
 
     connection.on('close', function(reasonCode, description) {
-        console.log('closed')
+        const currentRoom = rooms.find(room => room.id === connection.roomId);
+        if(currentRoom) {
+        	currentRoom.players.map((player, i) => {
+        		if(player.id === connection.sessionId) {
+        			console.log('inja')
+        			currentRoom.players[i].status = 'disconnected';
+        			sendToAll(currentRoom.id, { 
+        				cmd: 'PLAYER_DISCONNECT', 
+        				room: currentRoom,
+        				player
+        			});
+        		}
+        	})
+        }
     });
 });

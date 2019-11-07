@@ -29,6 +29,24 @@ class Game extends Component<any, State> {
     this.kickoff = this.kickoff.bind(this);
     this.setCard = this.setCard.bind(this);
   }
+  componentWillMount() {
+  	this.auth();
+  }
+  auth() {
+  	const loggedInUser = window['localStorage'].getItem('user');
+  	if(loggedInUser) {
+  		const data = JSON.parse(loggedInUser);
+  		sendMessage(JSON.stringify({
+	  		"cmd": "JOIN_GAME",
+	  		"data": {
+	  			"id": this.state.gameId,
+	  			"name": data.name,
+	  			"sessionId": data.id,
+	  		}
+	  	}));
+  		this.setState({ screen: Screen.PLAYING });
+  	}
+  }
   setName(e: any, reset: boolean = false) {
 	const value = e.currentTarget.innerHTML;
   	if(this.state.name.length < 6) {
@@ -41,16 +59,18 @@ class Game extends Component<any, State> {
   kickoff() {
   	this.setState({ screen: Screen.PLAYING });
   	const sessionId = Math.random().toString(36).substr(2, 16);
-  	window['localStorage'].setItem('sessionId', sessionId);
-  	const message = JSON.stringify({
+  	window['localStorage'].setItem('user', JSON.stringify({
+  		id: sessionId,
+  		name: this.state.name
+  	}));
+	sendMessage(JSON.stringify({
   		"cmd": "JOIN_GAME",
   		"data": {
   			"id": this.state.gameId,
   			"name": this.state.name,
   			"sessionId": sessionId,
   		}
-  	});
-	sendMessage(message);
+  	}));
   }
   render() {
     return (

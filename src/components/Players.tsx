@@ -5,6 +5,7 @@ import { client } from '../';
 type Player = {
   id: string;
   name: string;
+  status: string;
 }
 
 interface State {
@@ -24,7 +25,6 @@ class Players extends Component<any, State> {
     }
   }
   render() {
-    console.log(Object.keys(Icons))
     return (
       <div className={'Players'}>
       {
@@ -33,7 +33,7 @@ class Players extends Component<any, State> {
           return (
             <div className={'Player'}>
               <img alt={'player'} src={avatar} />
-              <h3>{player.name}</h3>
+              <h3>{player.name}</h3> <small>{player.status}</small>
             </div>
           )
         })
