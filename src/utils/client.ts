@@ -1,10 +1,5 @@
-import { client } from "../";
+import { socket } from "../";
 
-export const sendMessage = (data: string) => {
-	const interval = setInterval(() => {
-    	if (data && client.readyState === client.OPEN) {
-		    client.send(data);
-		    clearInterval(interval);
-		}
-    }, 1000);
+export const sendMessage = (cmd: string, data: any) => {
+    socket.emit(cmd, data);
 }

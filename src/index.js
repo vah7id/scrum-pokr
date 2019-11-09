@@ -2,21 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import io from 'socket.io-client';
 
-export const WS = require('websocket').w3cwebsocket;
-export const client = new WS('ws://localhost:8000/', 'echo-protocol', null, null, {});
+export const socket = io('http://localhost:3434');
 
-client.onopen = (msg) => {
-    console.log('send signal')
-};
-
-client.onclose = () => {
-    console.log('lost connection')
-}
-
-client.onerror = () => {
-    console.log('error in connection')
-}
+socket.on('error', console.error.bind(console));
+socket.on('message', console.log.bind(console));
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

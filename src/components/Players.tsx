@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Icons from './Icons';
-import { client } from '../';
+import { socket } from '../';
 
 type Player = {
   id: string;
@@ -20,9 +20,9 @@ class Players extends Component<any, State> {
     }
   }
   componentWillMount() {
-    client.onmessage = (msg: any) => {
-      this.setState({ players: JSON.parse(msg.data).room.players });
-    }
+    socket.on('ROOM_UPDATE', (data: any) => {
+      this.setState({ players: data.room.players });
+    });
   }
   render() {
     return (

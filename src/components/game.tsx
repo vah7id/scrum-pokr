@@ -36,15 +36,18 @@ class Game extends Component<any, State> {
   	const loggedInUser = window['localStorage'].getItem('user');
   	if(loggedInUser) {
   		const data = JSON.parse(loggedInUser);
-  		sendMessage(JSON.stringify({
-	  		"cmd": "JOIN_GAME",
-	  		"data": {
+  		if(data.gameId === this.state.gameId) {
+  			console.log('join again')
+  			sendMessage("JOIN_GAME", {
 	  			"id": this.state.gameId,
 	  			"name": data.name,
 	  			"sessionId": data.id,
-	  		}
-	  	}));
-  		this.setState({ screen: Screen.PLAYING });
+	  		});
+  			this.setState({ screen: Screen.PLAYING });
+  		} else {
+  			// window['localStorage'].removeItem('user');
+  		}
+  		
   	}
   }
   setName(e: any, reset: boolean = false) {
@@ -60,17 +63,16 @@ class Game extends Component<any, State> {
   	this.setState({ screen: Screen.PLAYING });
   	const sessionId = Math.random().toString(36).substr(2, 16);
   	window['localStorage'].setItem('user', JSON.stringify({
+  		gameId: this.state.gameId,
   		id: sessionId,
   		name: this.state.name
   	}));
-	sendMessage(JSON.stringify({
-  		"cmd": "JOIN_GAME",
-  		"data": {
-  			"id": this.state.gameId,
-  			"name": this.state.name,
-  			"sessionId": sessionId,
-  		}
-  	}));
+  	console.log('save in localstorage')
+	sendMessage("JOIN_GAME", {
+		"id": this.state.gameId,
+		"name": this.state.name,
+		"sessionId": sessionId,
+	});
   }
   render() {
     return (
